@@ -73,3 +73,23 @@ except Exception as e:
 if st.button("Predict"):
     st.text("Rs.")
     st.title(res)
+
+import streamlit as st
+
+# ... (your existing code)
+
+# Add debugging statements
+st.write("Debugging Information:")
+st.write(f"Python Version: {sys.version}")
+st.write(f"Streamlit Version: {st.__version__}")
+# Add more statements as needed
+
+# Attempt the prediction
+try:
+    predicted_price = model.predict(sample)
+    predicted_inflated_price = predicted_price * 1.26
+    res = '{:,}'.format(round(int(predicted_inflated_price), -3))
+    st.write(f"Predicted Price: {res}")
+except Exception as e:
+    st.error(f"Error during prediction: {e}")
+    print(f"Error during prediction: {e}")
