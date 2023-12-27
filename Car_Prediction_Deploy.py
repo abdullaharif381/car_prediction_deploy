@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 import pickle
-
 import os
+import sys  # Import sys for debugging
 
 # ... (your existing code)
 
@@ -16,10 +16,8 @@ with open(data_file_path, 'rb') as f:
 with open(model_file_path, 'rb') as f:
     model = pickle.load(f)
 
-
 # Streamlit app
 st.title("Used Car Worth Estimators")
-
 # Input fields
 name = st.selectbox("Enter the car company", car_data["car_name"].unique())
 year = st.selectbox("Enter the car manufacturing date", sorted(car_data["model_year"].unique()))
@@ -99,3 +97,7 @@ try:
 except Exception as e:
     st.error(f"Error during prediction: {e}")
     print(f"Error during prediction: {e}")
+    
+st.write("Debugging Information:")
+st.write(f"Python Version: {sys.version}")
+st.write(f"Streamlit Version: {st.__version__}")
