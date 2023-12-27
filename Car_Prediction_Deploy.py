@@ -1,23 +1,19 @@
 import pandas as pd
 import streamlit as st
 import pickle
-import os
-import sys  # Import sys for debugging
 
-# ... (your existing code)
-
-# Update paths to model files
-model_file_path = os.path.join(os.path.dirname(__file__), 'deploy_car.pickle')
-data_file_path = os.path.join(os.path.dirname(__file__), 'deploy_car_df.pickle')
-
-with open(data_file_path, 'rb') as f:
+# Load car data and model
+with open('deploy_car_df.pickle', 'rb') as f:
     car_data = pickle.load(f)
 
-with open(model_file_path, 'rb') as f:
+car_data = pd.DataFrame(car_data)
+
+with open('deploy_car.pickle', 'rb') as f:
     model = pickle.load(f)
 
 # Streamlit app
 st.title("Used Car Worth Estimators")
+
 # Input fields
 name = st.selectbox("Enter the car company", car_data["car_name"].unique())
 year = st.selectbox("Enter the car manufacturing date", sorted(car_data["model_year"].unique()))
@@ -77,27 +73,3 @@ except Exception as e:
 if st.button("Predict"):
     st.text("Rs.")
     st.title(res)
-
-import streamlit as st
-
-# ... (your existing code)
-
-# Add debugging statements
-st.write("Debugging Information:")
-st.write(f"Python Version: {sys.version}")
-st.write(f"Streamlit Version: {st.__version__}")
-# Add more statements as needed
-
-# Attempt the prediction
-try:
-    predicted_price = model.predict(sample)
-    predicted_inflated_price = predicted_price * 1.26
-    res = '{:,}'.format(round(int(predicted_inflated_price), -3))
-    st.write(f"Predicted Price: {res}")
-except Exception as e:
-    st.error(f"Error during prediction: {e}")
-    print(f"Error during prediction: {e}")
-    
-st.write("Debugging Information:")
-st.write(f"Python Version: {sys.version}")
-st.write(f"Streamlit Version: {st.__version__}")
