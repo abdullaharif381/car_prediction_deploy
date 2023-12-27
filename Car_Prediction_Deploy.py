@@ -2,14 +2,20 @@ import pandas as pd
 import streamlit as st
 import pickle
 
-# Load car data and model
-with open('deploy_car_df.pickle', 'rb') as f:
+import os
+
+# ... (your existing code)
+
+# Update paths to model files
+model_file_path = os.path.join(os.path.dirname(__file__), 'deploy_car.pickle')
+data_file_path = os.path.join(os.path.dirname(__file__), 'deploy_car_df.pickle')
+
+with open(data_file_path, 'rb') as f:
     car_data = pickle.load(f)
 
-car_data = pd.DataFrame(car_data)
-
-with open('deploy_car.pickle', 'rb') as f:
+with open(model_file_path, 'rb') as f:
     model = pickle.load(f)
+
 
 # Streamlit app
 st.title("Used Car Worth Estimators")
