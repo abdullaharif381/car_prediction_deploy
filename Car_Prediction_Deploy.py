@@ -2,24 +2,17 @@ import pandas as pd
 import streamlit as st
 import pickle
 
-# Load the car data
-try:
-    car_data = pd.read_pickle('deploy_car_df.pickle')
-except Exception as e:
-    st.error(f"Error loading car data: {e}")
-    st.stop()
+# Load car data and model
+with open('deploy_car_df.pickle', 'rb') as f:
+    car_data = pickle.load(f)
 
-# Load the model
-try:
-    with open('deploy_car.pickle', 'rb') as f:
-        model = pickle.load(f)
-except Exception as e:
-    st.error(f"Error loading model: {e}")
-    st.stop()
+car_data = pd.DataFrame(car_data)
+
+with open('deploy_car.pickle', 'rb') as f:
+    model = pickle.load(f)
 
 # Streamlit app
-st.title("Used Car Worth Estimators")
-
+st.title("Used Car Price Estimator")
 
 # Input fields
 name = st.selectbox("Enter the car company", car_data["car_name"].unique())
@@ -83,4 +76,3 @@ if st.button("Predict"):
         st.title(res)
     else:
         st.warning("Please fill in all the required fields before predicting.")
-
