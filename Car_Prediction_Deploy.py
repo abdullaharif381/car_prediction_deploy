@@ -3,13 +3,17 @@ import streamlit as st
 import pickle
 
 # Load car data and model
-with open('deploy_car_df.pickle', 'rb') as f:
-    car_data = pickle.load(f)
+try:
+    with open('deploy_car_df.pickle', 'rb') as f:
+        car_data = pickle.load(f)
+except Exception as e:
+    st.error(f"Error loading car data: {e}")
 
-car_data = pd.DataFrame(car_data)
-
-with open('deploy_car.pickle', 'rb') as f:
-    model = pickle.load(f)
+try:
+    with open('deploy_car.pickle', 'rb') as f:
+        model = pickle.load(f)
+except Exception as e:
+    st.error(f"Error loading machine learning model: {e}")
 
 # Streamlit app
 st.title("Used Car Price Estimator")
