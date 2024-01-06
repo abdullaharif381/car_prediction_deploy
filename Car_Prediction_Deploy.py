@@ -2,12 +2,7 @@ import pandas as pd
 import streamlit as st
 import pickle
 
-# Load car data and model
-with open('deploy_car_df.pickle', 'rb') as f:
-    car_data = pickle.load(f)
-
-car_data = pd.DataFrame(car_data)
-
+car_data = pd.read_pickle('deploy_car_df.pickle')
 with open('deploy_car.pickle', 'rb') as f:
     model = pickle.load(f)
 
